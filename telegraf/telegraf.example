@@ -1,0 +1,63 @@
+[global_tags]
+  eff-server="true"
+  eff-frontend="true"
+  eff-backend="true"
+  eff-standalonedb="true"
+  eff-masterdb="false"
+  eff-slavedb="false"
+[agent]
+  interval = "10s"
+  round_interval = true
+  metric_batch_size = 1000
+  metric_buffer_limit = 10000
+  collection_jitter = "0s"
+  flush_interval = "10s"
+  flush_jitter = "0s"
+  precision = ""
+  debug = false
+  quiet = true
+  hostname = ""
+  omit_hostname = false
+[[outputs.influxdb]]
+  urls = ["http://influxserver:8086"]
+  database = "telegraf"
+  retention_policy = ""
+  write_consistency = "any"
+  timeout = "5s"
+  username = "influx"
+  password = "influxpass"
+[[inputs.cpu]]
+  percpu = true
+  totalcpu = true
+  collect_cpu_time = false
+  report_active = false
+[[inputs.disk]]
+  ignore_fs = ["tmpfs", "cifs", "devtmpfs", "devfs", "iso9660", "overlay", "aufs", "squashfs", "nfs", "nfsv4", "nfs4"]
+[[inputs.diskio]]
+[[inputs.kernel]]
+[[inputs.mem]]
+[[inputs.processes]]
+[[inputs.swap]]
+[[inputs.system]]
+[[inputs.docker]]
+   endpoint = "unix:///var/run/docker.sock"
+[[inputs.memcached]]
+   servers = ["localhost:11211"]
+[[inputs.mysql]]
+   servers = ["smereader:readerpass@tcp(127.0.0.1:3306)/?tls=false"]
+ gather_slave_status = true
+ gather_global_variables = true
+ gather_table_io_waits = true
+ gather_table_lock_waits = true
+ gather_index_io_waits = true
+[[inputs.procstat]]
+    #exe = "php-fpm|httpd"
+    systemd_unit = "php-fpm.service"
+[[inputs.http_response]]
+ address = "http://localhost"
+[[inputs.redis]]
+   servers = ["tcp://localhost:6379"]
+[[inputs.net]]
+  interfaces = ["eth0"]
+[[inputs.phpfpm]]
+  urls = ["fcgi://127.0.0.1:9000/status"]
